@@ -1,0 +1,10 @@
+{
+  "name": "viz-engineering-skills",
+  "version": "0.1.0",
+  "description": "Agent skills for designing data visualizations with Munzner's nested model: domain situation, data and task abstraction, visual encoding, prototyping and iteration.",
+  "author": { "name": "JoaZaech", "url": "https://github.com/JoaZaech" },
+  "homepage": "https://github.com/JoaZaech/viz-engineering-skills",
+  "repository": "https://github.com/JoaZaech/viz-engineering-skills",
+  "license": "MIT",
+  "keywords": ["visualization", "dataviz", "munzner", "charts", "skills"]
+}

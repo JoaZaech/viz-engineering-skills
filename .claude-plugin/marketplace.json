@@ -1,0 +1,11 @@
+{
+  "name": "viz-engineering-skills",
+  "owner": { "name": "JoaZaech", "url": "https://github.com/JoaZaech" },
+  "plugins": [
+    {
+      "name": "viz-engineering-skills",
+      "source": "./",
+      "description": "Munzner-based skills for designing, prototyping and iterating data visualizations."
+    }
+  ]
+}
