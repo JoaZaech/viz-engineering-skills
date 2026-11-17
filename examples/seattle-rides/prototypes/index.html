@@ -1,0 +1,33 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Seattle Weekend Riders · prototypes</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box}html,body{margin:0;height:100%}
+body{display:flex;flex-direction:column;background:#fafaf9;color:#1c1c1a;font:13px Inter,system-ui,sans-serif}
+.bar{display:flex;align-items:center;gap:12px;padding:10px 24px;border-bottom:1px solid #e6e5e1}
+.pill{display:flex;gap:2px;padding:4px;background:#fff;border:1px solid #e6e5e1;border-radius:999px}
+.pill a{padding:6px 14px;border-radius:999px;color:#6b6b66;text-decoration:none;font-weight:500}
+.pill a.on{background:#1c1c1a;color:#fff}.pill a.off{opacity:.35;pointer-events:none}
+.own{margin-left:auto;color:#6b6b66}
+iframe{flex:1;border:0;width:100%}
+</style></head><body>
+<div class="bar"><div class="pill" id="qs"></div><div class="pill" id="vw"></div><a class="own" id="own" target="_blank">Open on its own ↗</a></div>
+<iframe id="f" title="Prototype"></iframe>
+<script>
+const QS = [
+  {id: "q1", dir: "q1-good-days", q: "Q1: Which months give the most good riding days?"},
+  {id: "q2", dir: "q2-wet-spells", q: "Q2: When rain cancels a ride, how long does the wet spell last?"},
+];
+function route() {
+  const [a = "q1", b = ""] = location.hash.slice(1).split("/");
+  const cmp = a === "compare", q = QS.find(x => x.id === a) || QS[0];
+  const src = cmp ? "compare.html" : `${q.dir}/${b === "decisions" ? "decisions.html" : "index.html" + (b ? "#" + b : "")}`;
+  if (!f.src.endsWith(src)) f.src = src;
+  own.href = src;
+  qs.innerHTML = QS.map(x => `<a href="#${x.id}" title="${x.q}" class="${!cmp && x.id === q.id ? "on" : ""} ${x.dir ? "" : "off"}">${x.id.toUpperCase()}</a>`).join("")
+    + `<a href="#compare" class="${cmp ? "on" : ""}">Compare all</a>`;
+  vw.innerHTML = cmp ? "" : `<a href="#${q.id}" class="${b !== "decisions" ? "on" : ""}">Prototype</a><a href="#${q.id}/decisions" class="${b === "decisions" ? "on" : ""}">Decisions</a>`;
+  vw.style.display = cmp ? "none" : "flex";
+}
+addEventListener("hashchange", route); route();
+</script></body></html>
