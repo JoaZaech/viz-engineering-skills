@@ -1675,7 +1675,8 @@ addEventListener("hashchange", start);
 document.fonts.load("600 12px Inter").then(() => document.fonts.ready).then(start, start);
 </script><script>/* viz-feedback */
 // Feedback pill for viz-prototype pages; build.py inlines this file into every prototype index.html. Needs the page globals D, cur and show(i).
-// Feedback lives in localStorage; "Export" downloads feedback-<folder>.json for Claude to record in decisions.md.
+// No server: feedback lives in localStorage; "Export" downloads feedback-<folder>.json and "Copy" puts the
+// section-7 table rows on the clipboard, for the agent to record in decisions.md. Works from file://.
 (() => {
   // ?thumb = thumbnail mode for compare.html: chart only, no header, captions, nav or feedback
   if (new URLSearchParams(location.search).has("thumb")) {
@@ -1689,13 +1690,8 @@ document.fonts.load("600 12px Inter").then(() => document.fonts.ready).then(star
   const RATINGS = [["closest", "★ Closest"], ["keep", "Keep"], ["drop", "Drop"]];
   const TAGS = ["Wrong chart type", "Hard to read", "Too busy", "Headline off", "Colours", "Missing context"];
   const load = () => { try { return JSON.parse(localStorage.getItem(KEY)) || {}; } catch { return {}; } };
-  const live = location.protocol.startsWith("http"); // served by serve.py: every click is written to decisions.md
-  let status = live ? "Saved to decisions.md" : "";
-  const save = s => {
-    try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {}
-    if (live) fetch("/feedback", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ folder: dir, designs: s }) })
-      .then(r => { status = r.ok ? "Saved to decisions.md" : "Not saved"; render(); }, () => { status = "Not saved: is serve.py running?"; render(); });
-  };
+  const save = s => { try { localStorage.setItem(KEY, JSON.stringify(s)); } catch {} };
+  let copied = false;
   let st = load(), tagsOpen = false;
 
   const css = document.createElement("style");
@@ -1740,15 +1736,23 @@ document.fonts.load("600 12px Inter").then(() => document.fonts.ready).then(star
     }
     const n = Object.values(st).filter(x => x.rating || (x.tags || []).length).length;
     const e = document.createElement("div"); e.className = "row";
-    if (live) e.append(Object.assign(document.createElement("span"), { className: "lbl", textContent: `${status} (${n})` }));
-    else e.append(btn(`Export feedback (${n})`, false, exportJson));
+    e.append(btn(`Export (${n})`, false, exportJson), btn(copied ? "Copied ✓" : "Copy", false, copyRows));
     if (i < 0) box.append(e); else box.lastChild.append(...e.childNodes);
   }
   function exportJson() {
     const out = { folder: dir, question: document.querySelector("h1")?.textContent || "", exported: new Date().toISOString(), designs: st };
     const a = document.createElement("a");
     a.href = URL.createObjectURL(new Blob([JSON.stringify(out, null, 2)], { type: "application/json" }));
-    a.download = `feedback-${dir}.json`; a.click(); URL.revokeObjectURL(a.href);
+    a.download = `feedback-${dir}.json`; a.click();
+    setTimeout(() => URL.revokeObjectURL(a.href), 1000); // revoking at once can cancel the download in some browsers
+  }
+  function copyRows() {
+    // Same shape as section 7 of decisions.md, minus the round number, which the agent fills in.
+    const rows = Object.keys(st).sort((a, b) => a - b).filter(k => st[k].rating || (st[k].tags || []).length)
+      .map(k => `| ${k} ${st[k].name} | ${st[k].rating || ""} | ${(st[k].tags || []).join(", ")} |`);
+    const text = `Feedback for ${dir}:\n| Design | Rating | Tags |\n|---|---|---|\n${rows.join("\n")}`;
+    navigator.clipboard.writeText(text).then(() => { copied = true; render(); setTimeout(() => { copied = false; render(); }, 1500); },
+      () => prompt("Copy this feedback:", text));
   }
   const orig = window.show;
   window.show = function (i) { orig(i); render(); };

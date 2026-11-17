@@ -27,7 +27,7 @@ The method is Tamara Munzner's nested model from *Visualization Analysis and Des
 
 <p align="center">
   <img src=".github/assets/hero.png" alt="A viz-prototype page for the question 'Which months give the most good riding days?': design 2 of 5, a stacked bar chart headed 'July loses more days to heat than to rain', with the feedback pill open showing ★ Closest and the 'Missing context' tag selected" width="100%">
-  <br><sub>One of five D3.js designs for one question. The pill at the bottom right writes your rating straight into <code>decisions.md</code>.</sub>
+  <br><sub>One of five D3.js designs for one question. The pill at the bottom right records your rating, with no server: the page is a plain HTML file.</sub>
 </p>
 
 ## See it in action
@@ -60,14 +60,13 @@ The full output of one run lives in [`examples/seattle-rides`](examples/seattle-
   </tr>
 </table>
 
-**5 · Rate, then iterate:** click ★ Closest, Keep or Drop and add issue tags. Then say "2 is closest but needs context", and `viz-iterate` traces each tag to the block it belongs to and rebuilds from there.
+**5 · Rate, then iterate:** click ★ Closest, Keep or Drop and add issue tags. Your clicks stay in the browser. **Export** saves them as a JSON file for the agent to read, and **Copy** puts them on the clipboard as table rows to paste into the chat. Then say "2 is closest but needs context", and `viz-iterate` traces each tag to the block it belongs to and rebuilds from there.
 
-To open the example locally:
+To open the example, clone the repo and open the hub file. No server or install is needed:
 
 ```bash
-git clone https://github.com/JoaZaech/viz-engineering-skills && cd viz-engineering-skills
-pip install markdown
-python skills/viz-prototype/scripts/serve.py examples/seattle-rides/prototypes   # → http://127.0.0.1:8765/
+git clone https://github.com/JoaZaech/viz-engineering-skills
+open viz-engineering-skills/examples/seattle-rides/prototypes/index.html   # xdg-open on Linux, start on Windows
 ```
 
 ## How it works
@@ -152,8 +151,8 @@ Or call a skill by name, for example `/viz-prototype` in Claude Code.
 
 ## Requirements
 
-- **Python 3** with the [`markdown`](https://pypi.org/project/Markdown/) package (`pip install markdown`), for `viz-prototype`'s overview pages and its local feedback server.
-- The feedback server binds to **`127.0.0.1:8765` only**, serves HTML pages only, and writes only the feedback section of each `decisions.md` (then rebuilds the overview pages).
+- **Python 3** with the [`markdown`](https://pypi.org/project/Markdown/) package (`pip install markdown`). The agent uses it to build `viz-prototype`'s overview pages; you never run it yourself.
+- **No server.** Every page is a self-contained HTML file you open from disk. Feedback stays in your browser until you export or copy it.
 - Prototype pages load **D3.js 7.9.0** and the Inter font from a CDN, so viewing them needs an internet connection. Your data stays inlined in the local page.
 - The other skills need nothing beyond the agent.
 

@@ -64,7 +64,7 @@ Source: **doc** = taken from an existing block doc; **assumed** = Claude decided
 
 ## 7. Feedback
 
-One row per rated design and round, written automatically by `serve.py` when you click the feedback buttons in `index.html`.
+One row per rated design and round, recorded by the agent from the feedback you export, copy or write in chat.
 
 | Round | Design | Rating | Tags |
 |---|---|---|---|
