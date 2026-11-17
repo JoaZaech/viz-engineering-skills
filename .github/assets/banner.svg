@@ -1,0 +1,35 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 960 220" role="img" aria-label="viz-engineering-skills: agent skills that design charts the way a visualization researcher would">
+  <title>viz-engineering-skills</title>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#1c1c1a"/><stop offset="1" stop-color="#2a2f36"/>
+    </linearGradient>
+  </defs>
+  <rect width="960" height="220" rx="24" fill="url(#bg)"/>
+  <!-- faint chart texture on the right -->
+  <g opacity=".14" fill="#fafaf9" transform="translate(64 0)">
+    <rect x="700" y="128" width="16" height="52" rx="3"/><rect x="724" y="104" width="16" height="76" rx="3"/>
+    <rect x="748" y="70" width="16" height="110" rx="3"/><rect x="772" y="84" width="16" height="96" rx="3"/>
+    <rect x="796" y="58" width="16" height="122" rx="3"/><rect x="820" y="92" width="16" height="88" rx="3"/>
+    <rect x="844" y="118" width="16" height="62" rx="3"/><rect x="868" y="140" width="16" height="40" rx="3"/>
+  </g>
+  <g transform="translate(48 46)">
+    <rect x="0" y="0" width="128" height="128" rx="28" fill="#111110"/>
+    <rect x="12" y="12" width="104" height="104" rx="21" fill="none" stroke="#3f9a5b" stroke-width="5"/>
+    <rect x="24" y="24" width="80" height="80" rx="15" fill="none" stroke="#4a7fb5" stroke-width="5"/>
+    <rect x="36" y="36" width="56" height="56" rx="10" fill="none" stroke="#e0a526" stroke-width="5"/>
+    <rect x="48" y="66" width="8" height="16" rx="2" fill="#fafaf9"/>
+    <rect x="60" y="55" width="8" height="27" rx="2" fill="#fafaf9"/>
+    <rect x="72" y="47" width="8" height="35" rx="2" fill="#e0892b"/>
+  </g>
+  <g font-family="Inter, -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif">
+    <text x="208" y="100" fill="#fafaf9" font-size="40" font-weight="700" letter-spacing="-.5">viz-engineering-skills</text>
+    <text x="208" y="134" fill="#c9c7c0" font-size="18">Agent skills that design charts the way a visualization researcher would.</text>
+    <g font-size="13" font-weight="600">
+      <rect x="208" y="152" width="108" height="26" rx="13" fill="#3f9a5b" fill-opacity=".22"/><text x="262" y="169" fill="#8fd1a3" text-anchor="middle">1 · Domain</text>
+      <rect x="324" y="152" width="164" height="26" rx="13" fill="#4a7fb5" fill-opacity=".25"/><text x="406" y="169" fill="#a9c6e8" text-anchor="middle">2 · Data + task abstraction</text>
+      <rect x="496" y="152" width="108" height="26" rx="13" fill="#e0a526" fill-opacity=".22"/><text x="550" y="169" fill="#f0cf7f" text-anchor="middle">3 · Encoding</text>
+      <rect x="612" y="152" width="136" height="26" rx="13" fill="#fafaf9" fill-opacity=".12"/><text x="680" y="169" fill="#e6e5e1" text-anchor="middle">4 · Built in D3.js</text>
+    </g>
+  </g>
+</svg>

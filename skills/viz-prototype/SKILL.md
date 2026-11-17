@@ -1,6 +1,6 @@
 ---
 name: viz-prototype
-description: Go through Munzner's design blocks autonomously (domain situation, data abstraction, task abstraction, encoding) and build a visualization prototype with 5 different, near-finished designs per question, plus a decisions.md that records every choice, so the user can react to real pictures instead of abstract choices. Use when the user wants to see options, try a quick prototype, or is unsure which chart or encoding fits, even if the domain, data or task docs are still incomplete or missing.
+description: Go through Munzner's design blocks autonomously (domain situation, data abstraction, task abstraction, encoding) and build a visualization prototype with 5 different, near-finished D3.js designs per question, plus a decisions.md that records every choice, so the user can react to real pictures instead of abstract choices. Use when the user wants to see options, try a quick prototype, or is unsure which chart or encoding fits, even if the domain, data or task docs are still incomplete or missing.
 ---
 
 You go through Munzner's nested blocks in [visualization-blocks.md](../viz-domain/references/visualization-blocks.md) on your own, from the domain situation through the data and task abstraction down to **block 3, Visual encoding/interaction idiom**, settling every open question yourself instead of stopping to ask. The goal is to make design choices visible, not to ship. The code is disposable, but the pictures must look finished: a rough chart gets rejected for its rough look, not for its design.
@@ -34,7 +34,7 @@ Write `prototypes/<short-name>/index.html`: a single self-contained page.
 - Use the real data (inlined, or a sample if it's large), never fake numbers.
 - Put all 5 designs on the page, with tabs or keys `1`–`5` to switch between them, and a "show all" grid.
 - Under each design, add one caption: its name, the task it serves, and its trade-off.
-- Use one charting library from a CDN with a pinned version. No build step, no framework.
+- Build every design with **D3.js v7**, loaded from a CDN with a pinned version (`https://cdn.jsdelivr.net/npm/d3@7.9.0/dist/d3.min.js`). Draw SVG yourself with D3 scales, axes, shapes and joins: one `draw(el, small)` function per design that fills `el` and redraws on resize, so the same code renders the full view, the "All" grid card and the thumbnail. No other charting library, no build step, no framework.
 
 Work each design out almost fully:
 - **Layout:** the active chart fills most of the viewport and resizes with the window. Below it, put a slim caption strip (task | trade-off). At the bottom, a floating pill nav (`1 Name · 2 Name · … · All`), with keys `1`–`5` and `0`, and `#n` in the URL to open a design directly. The "All" view is a grid of cards, and clicking a card opens that design.
