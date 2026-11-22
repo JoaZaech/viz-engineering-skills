@@ -11,6 +11,7 @@ You are in **block 3, Visual encoding/interaction idiom** of [visualization-bloc
 References:
 - [marks-channels.md](references/marks-channels.md): marks, channels, the channel ranking, expressiveness and effectiveness ([marks.png](assets/marks.png), [channels.png](assets/channels.png), [channel-effectiveness.png](assets/channel-effectiveness.png)).
 - [perceptual-principles.md](references/perceptual-principles.md): why the ranking holds (Gestalt, Stevens, Weber) and a design checklist.
+- [chart-atlas.md](references/chart-atlas.md): a catalogue of chart types to browse for candidates; no recommendations.
 - [viz-effectiveness.md](references/viz-effectiveness.md): accuracy, discriminability, separability, popout, grouping, and the effectiveness checklist ([example_seperability.png](assets/example_seperability.png)).
 
 Output format: [encoding-template.md](references/encoding-template.md). Work through the steps below for each primary task, or for the ones the user names; start with the top-ranked one. Each task gets its own view; combining views is a later decision. If the primaries are not yet confirmed, go ahead, but list the encoding's dependence on them under Open questions.
@@ -37,7 +38,7 @@ Run the effectiveness checklist in [viz-effectiveness.md](references/viz-effecti
 
 ## 4. Three alternatives
 
-Sketch three designs that differ in the **mark** or in the **channel of a top-priority attribute**, not only in colour. Three restyles of one chart give the user no real choice. Each alternative should be one you could defend for the task; don't add a deliberately weak design as filler, and if two candidates turn out nearly equal in effectiveness, say so: that's a finding too. Good sources of candidates: From Data to Viz (by data type), the FT Visual Vocabulary (by what the chart should show), the D3 gallery. Describe each candidate in marks and channels and check it against step 3 before keeping it.
+Sketch three designs that differ in the **mark** or in the **channel of a top-priority attribute**, not only in colour. Three restyles of one chart give the user no real choice. Each alternative should be one you could defend for the task; don't add a deliberately weak design as filler, and if two candidates turn out nearly equal in effectiveness, say so: that's a finding too. For ideas, look through [chart-atlas.md](references/chart-atlas.md), a plain catalogue of chart types with the data each takes and how they derive from each other; it shows what is possible, not what to pick, and a good design may be in none of its rows. Other sources: From Data to Viz (by data type), the FT Visual Vocabulary (by what the chart should show), the D3 gallery. Describe each candidate in marks and channels and check it against step 3 before keeping it.
 
 Draw them from **10 to 20 real values** taken from the data with a short script; never invent values. If the mark is an aggregate and the task compares a small complete set (12 months × 4 years), use the whole set rather than cutting the comparison, and say so. A small real sample shows the actual problems (a skewed value, a long label, a tie) that fake data hides. List the sample in the doc.
 

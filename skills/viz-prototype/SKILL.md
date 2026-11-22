@@ -26,7 +26,7 @@ Layout and build rules that come from this skill are not decisions; leave them o
 
 ## 2. Pick 5 genuinely different designs
 
-Each design is a different answer to the main task, not a restyle of the same chart. Vary at least one of:
+Each design is a different answer to the main task, not a restyle of the same chart. To widen the search, browse [chart-atlas.md](../viz-encoding/references/chart-atlas.md), a catalogue of what is possible, not a list to choose from. Vary at least one of:
 - **mark and chart type**: bars, dots, lines, area, heatmap cells
 - **the attribute on the strongest channel**: whatever sits on the shared position axis is what readers compare best ([marks-channels.md](../viz-encoding/references/marks-channels.md))
 - **arrangement**: one view, small multiples, sorted or grouped
