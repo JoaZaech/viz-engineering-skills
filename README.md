@@ -80,13 +80,26 @@ Munzner's model nests four levels of design, and a mistake at an outer level can
 ```mermaid
 flowchart LR
     A["<b>viz-domain</b><br/>who, and which questions?"] --> B["<b>viz-data-abstract</b><br/>what is the data?"]
-    A --> C["<b>viz-task-abstract</b><br/>why do they look?"]
-    B --> D["<b>viz-encoding</b><br/>how to draw it?"]
-    C --> D
+    B --> C["<b>viz-task-abstract</b><br/>why do they look?"]
+    C --> D["<b>viz-encoding</b><br/>how to draw it?"]
     D --> E["<b>viz-prototype</b><br/>5 D3.js designs per question"]
+    A -. "skip ahead" .-> E
     E -- "★ Closest · Keep · Drop · tags" --> F["<b>viz-iterate</b><br/>fix the earliest wrong block"]
     F --> E
 ```
+
+Each block skill interviews you in short rounds: numbered questions, each with a recommended answer, so you only correct what is wrong. Each one writes its own doc into `docs/`, and the next skill reads it:
+
+| Block | Doc | What it settles |
+|---|---|---|
+| Domain | `domain-situation.md` | One concrete target user, at least 5 questions in their words, the real need behind each, and the data |
+| Data | `data-abstraction.md` | Dataset type, items and keys, every attribute typed, derived and dropped attributes, data issues and their handling |
+| Task | `task-abstraction.md` | Each question as action + target + data, checked against its real need; 2–3 primary tasks; a data/task consistency check |
+| Encoding | `encoding.md` + `encoding-sketches.html` | Per primary task: ranked attributes, mark, channels, three static alternatives drawn from real values, the choice and its weakness |
+
+The docs are working documents. When a later block shows an earlier one was wrong, the first version stays and a **Changes** log records what changed and why. If you'd rather not answer now, the skills write their questions to `docs/questions-for-user.md`, continue with the recommended answers and mark those as open.
+
+`viz-prototype` runs all four blocks on its own and records every choice in `decisions.md`, with its source: your docs, the data, your answers, or **assumed** by the agent. The assumptions are listed first, so you check only what the agent guessed.
 
 ### Why D3.js
 
@@ -103,7 +116,7 @@ Every prototype is hand-drawn SVG in **[D3.js v7](https://d3js.org)**: D3 scales
 | [`viz-prototype`](skills/viz-prototype) | All blocks, autonomously | Builds 5 genuinely different, near-finished **D3.js** designs per question, a `decisions.md` recording every choice, and a local feedback loop that writes your ratings into it. |
 | [`viz-iterate`](skills/viz-iterate) | Any block | Reworks an existing chart: reads the prototypes, decisions and ratings, finds the earliest block a problem touches, and re-runs it and every block after it. |
 
-Typical flow: `viz-domain` → `viz-data-abstract` → `viz-task-abstract` → `viz-encoding`. Or jump straight to `viz-prototype` to see options first, then `viz-iterate` until it works.
+Typical flow: `viz-domain` → `viz-data-abstract` → `viz-task-abstract` → `viz-encoding` → `viz-prototype` to build the chosen designs out. Or jump straight to `viz-prototype` to see options first, then `viz-iterate` until it works.
 
 ## Install
 
@@ -144,6 +157,8 @@ Ask in plain language; the agent picks the skill from its description:
 |---|---|
 | "Who is this chart for and what should it answer?" | `viz-domain` |
 | "What kind of data is `data.csv`?" | `viz-data-abstract` |
+| "What do the planners actually need to do with this data?" | `viz-task-abstract` |
+| "Which marks and channels fit the primary task?" | `viz-encoding` |
 | "Show me some options for visualizing Q2" | `viz-prototype` |
 | "Design 3 is close but too busy, improve it" | `viz-iterate` |
 
@@ -153,7 +168,7 @@ Or call a skill by name, for example `/viz-prototype` in Claude Code.
 
 - **Python 3** with the [`markdown`](https://pypi.org/project/Markdown/) package (`pip install markdown`). The agent uses it to build `viz-prototype`'s overview pages; you never run it yourself.
 - **No server.** Every page is a self-contained HTML file you open from disk. Feedback stays in your browser until you export or copy it.
-- Prototype pages load **D3.js 7.9.0** and the Inter font from a CDN, so viewing them needs an internet connection. Your data stays inlined in the local page.
+- Prototype pages and encoding sketches load **D3.js 7.9.0** and a web font from a CDN, so viewing them needs an internet connection. Your data stays inlined in the local page.
 - The other skills need nothing beyond the agent.
 
 ## Credits
