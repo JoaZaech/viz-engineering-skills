@@ -1,6 +1,7 @@
 ---
 name: viz-domain
-description: Domain situation (Munzner's first block): interview the user about stakeholders, tasks, questions and data before any visualization is designed. Use at the start of a visualization project, or when asked who a visualization is for or what it should answer.
+description: >-
+  Domain situation (Munzner's first block): interview the user about the target users, their goal, at least 5 domain questions with the real need behind each, and the data, before any visualization is designed. Use at the start of a visualization project, or when asked who a visualization is for or what it should answer.
 ---
 
 Establish the **domain situation**: who the visualization is for, what they need to do, which questions it must answer, and what data exists, in the users' own terms. Abstract types and tasks belong to `viz-data-abstract`.
@@ -25,21 +26,24 @@ Done when every template field is filled or listed as a gap.
 
 ## 2. Grill
 
-Call the `grilling` skill on the gaps. Three rules from this block override or sharpen it:
+Interview the user on the gaps as described in [interview.md](references/interview.md): rounds, numbered questions, a recommended answer for each. Three rules from this block override or sharpen it:
 
-- **Facts about the data are the user's to give**, not yours to look up. Everything else in `grilling` applies, including looking up facts in README and docs.
+- **Facts about the data are the user's to give**, not yours to look up. Everything else in [interview.md](references/interview.md) applies, including looking up facts in README and docs.
 - **Recommended answers are claims about the user's domain** that they can confirm or correct. Never recommend a visualization.
 - **Pin vague answers to a concrete case**: "the last time this happened", "what do you do today". Pin vague or overloaded terms too ("renewable" meaning two things): settle one meaning and record it under Domain definitions.
 
 The design tree, root first. Each node unblocks the next:
 
 1. **Problem**: what goes wrong today, why now, what changes if solved.
-2. **Stakeholders**: users, audience, decision makers, data owners. For each: role, what they already know (terms, charts they read), when and where they face the problem. Who is missing?
+2. **Target users**: one concrete role ("a transit planner at the city of Heilbronn"), not "everyone interested in X". Settle one primary user group: a different stakeholder per question splits the design into unrelated charts later. Audience, decision makers and data owners can be added as supporting rows. For each: role, what they already know (terms, charts they read), when and where they face the problem.
 3. **Tasks**: what each stakeholder wants to accomplish, and which decision or action follows.
-4. **Questions**: what each stakeholder wants to answer, in domain terms ("which region lost customers last quarter?"). Ask for the last real question they tried to answer.
+4. **Questions**: at least 5 that the target users would ask, in their words ("which region lost customers last quarter?"), before anyone thinks about charts. Ask for the last real question they tried to answer. For each question:
+   - **Real need**: one sentence on what the user will do with the answer. A stated request ("show me a map of stations") often hides a different task ("find out when stations run empty"), and the real need is what the task abstraction checks against.
+   - **Source**: dataset documentation, a real stakeholder, published use of the data, or **assumed**. Assumed questions are allowed when labelled.
+   - Order the questions so they tell one story: the same users pursue one goal, and the answer to one question leads to the next (first find the stations that run empty, then when, then compare them with nearby stations).
 5. **Data**: what each file, table and field means to the users; their units, codes and names; where it comes from; known gaps and errors; what must be transformed before use; who can explain it. For each question: is the data available, partial or missing? Also existing resources: people, systems, documentation.
 
-Done when every node is covered for every stakeholder, and every question is marked data available, partial or missing.
+Done when every node is covered, there are at least 5 questions with a real need and a source each, and every question is marked data available, partial or missing.
 
 ## 3. Confirm
 
@@ -51,10 +55,10 @@ Done when the user confirms. Wait for that before writing.
 
 Fill the template into `docs/domain-situation.md`:
 
-- One S row per stakeholder, one T row per task (linked to its S), one Q row per question (linked to its S and the data needed, or marked missing).
+- One S row for the primary target users (plus supporting rows if any), one T row per task, one Q row per question with its real need, source and the data needed (or marked missing), in story order.
 - Every decision from the grill is a D row (D1, D2, ...: about, question, answer, consequence).
 - Every defined term goes under Domain definitions; every deferred item under Deferred.
 
-Done when every stakeholder has a task, every task and question has a stakeholder, and every grill answer is a D row.
+Done when the target users are one concrete role, every question has a real need and a source, and every grill answer is a D row.
 
-Finish with the counts of stakeholders, tasks and questions, and list questions with missing data. Next: `viz-data-abstract`.
+Finish with the target users in one sentence, the questions as the story they tell, and the questions with missing data. Next: `viz-data-abstract`.

@@ -20,7 +20,7 @@
 
   const css = document.createElement("style");
   css.textContent = `
-  #fb{position:fixed;right:24px;bottom:24px;z-index:10;display:flex;flex-direction:column;align-items:flex-end;gap:6px;font:500 12px Inter,system-ui,sans-serif}
+  #fb{position:fixed;right:24px;bottom:24px;z-index:10;display:flex;flex-direction:column;align-items:flex-end;gap:6px;font:500 12px system-ui,sans-serif;font-family:inherit}
   #fb .row{display:flex;gap:4px;padding:5px;background:#fff;border:1px solid #e6e5e1;border-radius:999px;box-shadow:0 6px 24px rgba(0,0,0,.08)}
   #fb .tags{flex-wrap:wrap;justify-content:flex-end;max-width:360px;border-radius:14px}
   #fb button{font:inherit;border:0;background:transparent;color:#6b6b66;padding:6px 11px;border-radius:999px;cursor:pointer;white-space:nowrap}

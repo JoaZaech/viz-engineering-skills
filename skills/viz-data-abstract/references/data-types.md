@@ -12,6 +12,7 @@ The vocabulary for answering **"What?"** (data abstraction): what the items and 
 6. [Dataset availability](#6-dataset-availability): static, dynamic
 7. [Attribute descriptors](#7-attribute-descriptors): key, data model, unit / range, source
 8. [From raw to visualized data](#8-from-raw-to-visualized-data): transformation, derived, dropped, data issues and their handling
+9. [Temporal and hierarchical semantics](#9-temporal-and-hierarchical-semantics): time as value or key, attribute hierarchies
 
 Visual summaries (the tables below transcribe their content):
 - [summary_data_types.png](../assets/summary_data_types.png): data types, dataset types, attribute types, ordering direction, dataset availability
@@ -21,6 +22,9 @@ Visual summaries (the tables below transcribe their content):
 
 ## 1. Core terms
 
+The same numbers mean different things depending on **semantics** (real-world meaning: grouping, unit, order) and **data type** (structural or mathematical interpretation). `22, 7, 0, 19.3, 14.19, 7` can be one point in 6-D space, two points in 3-D space, or the weight of the heaviest fish caught on each of the last 6 days, and each reading needs a different chart. Semantics can sometimes be inferred from the raw data (a `Date` column); otherwise it comes from **metadata** (a dataset description). The line between data and metadata is often blurry.
+
+
 - **Item**: an individual entity; a discrete unit. Examples: a row in a table, a node in a network, a city or country in geometry.
 - **Attribute**: a property of an item that can be measured, observed or logged. Example: a column in a table.
 
@@ -28,9 +32,9 @@ Visual summaries (the tables below transcribe their content):
 
 | Type | Ordered? | Meaning | Example |
 |---|---|---|---|
-| **Categorical** | No | Distinct groups with no inherent order | Shapes: + ● ■ ▲ |
-| **Ordinal** | Yes | Ordered, but differences are not meaningful quantities | Shirt sizes S, M, L |
-| **Quantitative** | Yes | Ordered and arithmetic is meaningful | Lengths |
+| **Categorical** | No | Can only be compared for equality. May have a hierarchy or grouping (apple Gala vs. apple Pink Lady vs. orange) | Run clubs; shapes + ● ■ ▲ |
+| **Ordinal** | Yes | Can be compared and ordered, but arithmetic is often not sensible | Race distance 5k < 10k < half < marathon (a race classified by length); shirt sizes S, M, L |
+| **Quantitative** | Yes | Arithmetic is meaningful | Height of a person; time to finish a race |
 
 Ordinal and quantitative attributes together are **ordered** data. Ordered data also has an [ordering direction](#3-ordering-direction).
 
@@ -40,9 +44,9 @@ Ordinal and quantitative attributes together are **ordered** data. Ordered data 
 
 Applies only to ordered attributes ([ordinal or quantitative](#2-attribute-types)).
 
-- **Sequential**: a homogeneous range from a minimum to a maximum.
-- **Diverging**: two sequences that meet at a common zero point.
-- **Cyclic**: values wrap around back to the start point.
+- **Sequential**: a homogeneous range from a minimum to a maximum. Example: race time; mountain height above sea level.
+- **Diverging**: two sequences that meet at a common zero point. Example: temperature around 0 °C; elevation relative to sea level.
+- **Cyclic**: values wrap around back to the start point. Example: an annual race date; time of day.
 
 ## 4. Data types
 
@@ -60,23 +64,24 @@ Dataset types arise from combinations of the [data types](#4-data-types).
 
 | Dataset type | Built from | Notes |
 |---|---|---|
-| **Tables** | Items, Attributes | Items are rows, attributes are columns, each cell holds a value. Variant: **multidimensional table**, where several keys index a cell. |
-| **Networks & Trees** | Items (nodes), Links, Attributes | Nodes connected by links. A **tree** is a hierarchical network. |
-| **Fields** (continuous) | Grids, Positions, Attributes | A grid of positions; each cell holds attribute values. |
-| **Geometry** (spatial) | Items, Positions | Items with spatial positions, e.g. points on a map. |
-| **Clusters, Sets, Lists** | Items | Groupings of items. |
+| **Tables** | Items, Attributes | **Flat table**: each row is an item, each column an attribute, each cell a value; usually one key. **Multidimensional table**: several keys index a cell (runner × year × race length → time). It can be **sparse** (some key combinations are empty) and **sliced** (fix one key to get a lower-dimensional table, e.g. all 10k times), which is especially useful with aggregation. |
+| **Networks & Trees** | Items (nodes), Links, Attributes | Nodes connected by links; both nodes and links can have attributes. The layout of a network is a design choice, independent of the abstract dataset. A **tree** has no cycles and usually expresses a hierarchy. |
+| **Fields** (continuous) | Grids, Positions, Attributes | The key is a continuous spatial position; each cell holds values from a continuous domain, so sampling and interpolation matter. Tasks concern spatial structure or shape. Grid types: **uniform** (geometry and topology implicit: origin, spacing, dimensions), **rectilinear** (non-uniform axis coordinates, topology implicit), **structured/curvilinear** (geometry explicit per point, topology implicit), **unstructured** (geometry and topology explicit: points and a cell list). |
+| **Geometry** (spatial) | Items, Positions | Items with an intrinsic spatial location and shape, e.g. countries on a map. Can carry an intrinsic hierarchy (country → state → town); shapes are of interest. |
+| **Clusters, Sets, Lists** | Items | Groupings of items. **Set**: unordered collection, membership given (can overlap). **List**: ordered collection, the position is part of the data (a leaderboard). **Cluster**: grouping computed from attribute similarity, typically not in the raw data. |
 
 ![Dataset types: tables, networks, fields, geometry, and the data types each is built from](../assets/summary_dataset_types.png)
 
 ## 6. Dataset availability
 
-- **Static**: the whole dataset is available at once (e.g. a file).
-- **Dynamic**: data arrives over time as a stream.
+- **Static**: the whole dataset is available at once (e.g. a table of race results from one date).
+- **Dynamic**: aspects of the dataset change: data arrives as a stream or is updated (a live ranking during a race; corrected end results).
 
 ## 7. Attribute descriptors
 
 Recorded per attribute in the data abstraction, alongside its [attribute type](#2-attribute-types).
 
+- **Key vs. value**: keys are **independent** attributes that identify an item; values are **dependent** attributes, always looked up by the keys. A name can be a key only if it is unique; a runner ID is better (flat tables often use an implicit row index). In a multidimensional table, each key becomes one axis.
 - **Key**: an attribute (or combination) that uniquely identifies an item. Unambiguous when uniqueness follows from its meaning (e.g. an ID), not just from this snapshot. Simple (one attribute), compound (several attributes together), or implicit (row index). Always check uniqueness on the full data and record the duplicate count.
 - **Data model**: how values are stored (int, float, string, bool, date string). Not the same as attribute type: a ZIP code stored as int is categorical.
 - **Unit / range**: physical unit (km, kW), format (dd.mm.yyyy), or reference system (WGS84); none if unitless. Plus the range, which replaces cardinality: min–max for quantitative attributes, the ordered levels for ordinal ones, the number of levels for categorical ones.
@@ -93,3 +98,10 @@ Recorded per attribute in the data abstraction, alongside its [attribute type](#
   - **Flag**: keep the item and mark it with an attribute such as `is_suspect`.
   - **Keep and show**: keep the item as is and make it visible in the visualization (e.g. a "missing" category).
 - **Open question**: something the documentation does not answer, recorded with the best guess currently in use.
+
+## 9. Temporal and hierarchical semantics
+
+- **Time as a value** (temporal data): time is an attribute of an item, e.g. the date a race took place. Patterns to look for are **recurring** (does a runner run faster in the morning?) and **change over time** (does a runner get faster over the season?).
+- **Time as a key** (time-varying data): the dataset is indexed by time, e.g. animal-tracking sensors that give one interaction network per time step.
+- **Time series**: one value per regular time step, e.g. a stock price.
+- **Attribute hierarchy**: an attribute can be aggregated at several levels (GDP of continents → countries → states; a stock price within a week vs. a multi-year trend; super nodes that aggregate items in a network). Record the levels, and which one each question needs.

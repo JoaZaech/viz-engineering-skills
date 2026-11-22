@@ -17,23 +17,23 @@ FEEDBACK = Path(__file__).resolve().parent / "feedback.js"
 MARK = re.compile(r"<script>/\* vi[sz]-feedback \*/.*?</script>|<script src=\"\.\./feedback\.js\"></script>", re.S)
 BLOCKS = [("1.", "Domain"), ("2.", "Data"), ("3.", "Task"), ("4.", "Encoding"), ("5.", "Build")]
 CSS = """
-:root{--ink:#1c1c1a;--muted:#6b6b66;--line:#e6e5e1;--doc:#c9c7c0;--assumed:#e0a526;--user:#3f9a5b}
-*{box-sizing:border-box}body{margin:0;background:#fafaf9;color:var(--ink);font:13px/1.5 Inter,system-ui,sans-serif}
+:root{--ink:#1c1c1a;--muted:#6b6b66;--line:#e6e5e1;--doc:#c9c7c0;--data:#7a9cc6;--assumed:#e0a526;--user:#3f9a5b}
+*{box-sizing:border-box}body{margin:0;background:#fafaf9;color:var(--ink);font:14px/1.5 'IBM Plex Sans',system-ui,sans-serif}
 main{padding:20px 24px 48px}.cols{display:grid;grid-auto-flow:column;grid-auto-columns:minmax(340px,1fr);gap:24px;overflow-x:auto}
 .one{max-width:760px;margin:0 auto}
-h1{font-size:15px;margin:0 0 14px;line-height:1.35}h2{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:18px 0 4px}
+h1{font-size:22px;font-weight:600;margin:0 0 16px;line-height:1.3}h2{font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:18px 0 4px}
 ul{list-style:none;margin:0;padding:0}li{padding:3px 0 3px 14px;position:relative}
 li:before{content:"";position:absolute;left:0;top:10px;width:7px;height:7px;border-radius:50%;background:var(--doc)}
-li.assumed:before{background:var(--assumed)}li.user:before{background:var(--user)}li.assumed{background:#fdf6e6}
+li.data:before{background:var(--data)}li.assumed:before{background:var(--assumed)}li.user:before{background:var(--user)}li.assumed{background:#fdf6e6}
 .n{color:var(--muted);font-size:11px;margin-right:4px}.p{display:block;color:var(--muted);font-size:12px}
 .check li:before{background:var(--assumed)}.key{color:var(--muted);font-size:12px;margin:0 0 12px}
 .key i{display:inline-block;width:7px;height:7px;border-radius:50%;margin:0 4px 0 10px}
 code{font-size:11px;background:#f1f0ed;padding:0 3px;border-radius:3px}a{color:inherit}
 """
 KEY = ('<p class="key">Source:<i style="background:var(--assumed)"></i>assumed by Claude, check these'
-       '<i style="background:var(--doc)"></i>from your docs<i style="background:var(--user)"></i>confirmed by you</p>')
+       '<i style="background:var(--doc)"></i>from your docs<i style="background:var(--data)"></i>read from the data<i style="background:var(--user)"></i>confirmed by you</p>')
 PAGE = ('<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">'
-        '<title>{title}</title><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">'
+        '<title>{title}</title><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">'
         '<style>{css}</style></head><body><main>{body}</main></body></html>')
 
 
@@ -56,8 +56,8 @@ def inline(s):
 
 
 def source(cell):
-    m = re.match(r"^\**(doc|assumed|user)\b", cell, re.I)
-    return m.group(1).lower() if m else "doc"
+    m = re.match(r"^\**(doc|data|assumed|user)\b", cell, re.I)
+    return m.group(1).lower() if m else "assumed"  # an unknown label is a claim nobody checked
 
 
 def decisions(text):
@@ -108,7 +108,7 @@ def inline_feedback(page):
 
 
 CMP_CSS = """
-.blk{margin:0 0 28px}.blk>h2{font-size:13px;letter-spacing:0;text-transform:none;color:var(--ink);margin:0 0 2px}
+.blk{margin:0 0 28px}.blk>h2{font-size:16px;letter-spacing:0;text-transform:none;color:var(--ink);margin:0 0 2px}
 .blk>.sub{color:var(--muted);font-size:12px;margin:0 0 10px}
 .grid{display:grid;grid-template-columns:repeat(var(--n),minmax(220px,1fr));gap:12px}
 .cell{background:#fff;border:1px solid var(--line);border-radius:10px;padding:10px 12px}
@@ -134,7 +134,7 @@ def plain(s, n=110):
 
 
 def counts_bar(text):
-    c = {"assumed": 0, "doc": 0, "user": 0}
+    c = {"assumed": 0, "doc": 0, "data": 0, "user": 0}
     for _, _, src in decisions(text):
         c[src] += 1
     tot = sum(c.values()) or 1

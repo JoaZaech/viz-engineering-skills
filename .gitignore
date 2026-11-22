@@ -3,3 +3,4 @@ __pycache__/
 *.pyc
 prototypes/
 !examples/*/prototypes/
+viz-prototype-workspace/

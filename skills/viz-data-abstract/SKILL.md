@@ -1,6 +1,7 @@
 ---
 name: viz-data-abstract
-description: Data abstraction (Munzner's "What?"): identify and describe a dataset's type(s), items, keys, attributes and their types, derived and dropped attributes, data-quality issues and open questions. Use after the domain situation is clarified, before choosing a visualization, or when the user asks what kind of data they have.
+description: >-
+  Data abstraction (Munzner's "What?"): identify and describe a dataset's type(s), items, keys, attributes and their types, derived and dropped attributes, data-quality issues and open questions. Use after the domain situation is clarified, before choosing a visualization, or when the user asks what kind of data they have.
 ---
 
 Describe the dataset in abstract terms: its **dataset type(s)**, its **items**, and each **attribute**'s type. Types follow **semantics**, never storage: `"5k"` is a string but ordinal; a ZIP code is an integer but categorical.
@@ -35,7 +36,7 @@ Fill what the output and metadata settle. Done when each template field is answe
 
 ## 3. Grill
 
-Call the `grilling` skill on the doubts. Look up facts yourself; ask only about meaning and intent. The stakeholders' questions decide which readings matter (temperature can be quantitative, ordinal or categorical, depending on the task). Cover:
+Interview the user on the doubts as described in [interview.md](../viz-domain/references/interview.md): rounds, numbered questions, a recommended answer for each. Look up facts yourself; ask only about meaning and intent. The stakeholders' questions decide which readings matter (temperature can be quantitative, ordinal or categorical, depending on the task). Cover:
 
 - **Dataset type**: every dataset type the data can be read as (a table of trips is also a network of stations), which one to visualize, and the transformation to get there.
 - **Item and key**: what one item (row, node, cell) is in each file, how files link, whether the key is unambiguous (unique by meaning).

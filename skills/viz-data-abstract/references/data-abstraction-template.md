@@ -97,3 +97,11 @@ What the documentation does not answer. Each has a best guess, which this abstra
 | Positions | <n> | (`<lon>`, `<lat>`) <CRS> |
 | Grids | <n> | <grid> |
 | Hierarchies | <n> | `<a>` → `<b>` → `<c>` |
+
+## 10. Changes
+
+The abstraction is a working document: when the task abstraction, the encoding or a prototype shows an attribute or issue was wrong, keep the first version and log the change.
+
+| Date | What changed | Why (evidence) |
+|---|---|---|
+| <YYYY-MM-DD> | <first version> | <—> |

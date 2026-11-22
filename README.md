@@ -96,10 +96,10 @@ Every prototype is hand-drawn SVG in **[D3.js v7](https://d3js.org)**: D3 scales
 
 | Skill | Block | What it does |
 |---|---|---|
-| [`viz-domain`](skills/viz-domain) | 1 · Domain situation | Interviews you about stakeholders, their questions and the data; writes `docs/domain-situation.md`. |
+| [`viz-domain`](skills/viz-domain) | 1 · Domain situation | Interviews you about the target users, at least 5 domain questions with the real need behind each, and the data; writes `docs/domain-situation.md`. |
 | [`viz-data-abstract`](skills/viz-data-abstract) | 2 · Data abstraction (*What?*) | Types every attribute (categorical, ordinal, quantitative), dataset type, keys and derived attributes; writes `docs/data-abstraction.md`. |
-| [`viz-task-abstract`](skills/viz-task-abstract) | 2 · Task abstraction (*Why?*) | Rewrites each domain question as an abstract `{action, target}` task. |
-| [`viz-encoding`](skills/viz-encoding) | 3 · Visual encoding (*How?*) | Picks marks and channels using expressiveness and effectiveness, Gestalt, Stevens and Weber. |
+| [`viz-task-abstract`](skills/viz-task-abstract) | 2 · Task abstraction (*Why?*) | Rewrites each domain question as action + target + data, checks it against the real need, picks 2–3 primary tasks and runs the data/task consistency check; writes `docs/task-abstraction.md`. |
+| [`viz-encoding`](skills/viz-encoding) | 3 · Visual encoding (*How?*) | Per primary task: ranks attributes, picks the mark and channels (expressiveness, effectiveness), sketches three static alternatives from 10–20 real values and chooses one with its weakness; writes `docs/encoding.md`. |
 | [`viz-prototype`](skills/viz-prototype) | All blocks, autonomously | Builds 5 genuinely different, near-finished **D3.js** designs per question, a `decisions.md` recording every choice, and a local feedback loop that writes your ratings into it. |
 | [`viz-iterate`](skills/viz-iterate) | Any block | Reworks an existing chart: reads the prototypes, decisions and ratings, finds the earliest block a problem touches, and re-runs it and every block after it. |
 

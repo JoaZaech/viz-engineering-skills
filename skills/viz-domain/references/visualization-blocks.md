@@ -27,7 +27,7 @@ Each block has a skill. Find the skill you are running, do only that block's wor
 | [1. Domain situation](#1-domain-situation) | `viz-domain` | Who? What do they need? | `docs/domain-situation.md` | `viz-data-abstract` |
 | [2. Data/task abstraction](#2-datatask-abstraction) | `viz-data-abstract` (data part) | What? | `docs/data-abstraction.md` | `viz-task-abstract` |
 | [2. Data/task abstraction](#2-datatask-abstraction) | `viz-task-abstract` (task part) | Why? | `docs/task-abstraction.md` | `viz-encoding` |
-| [3. Visual encoding/interaction idiom](#3-visual-encodinginteraction-idiom) | `viz-encoding` | How? | | algorithm |
+| [3. Visual encoding/interaction idiom](#3-visual-encodinginteraction-idiom) | `viz-encoding` | How? | `docs/encoding.md`, `docs/encoding-sketches.html` | `viz-prototype`, interaction |
 | [4. Algorithm](#4-algorithm) | none yet | How to render? | | |
 
 A topic that belongs to an outer block, but was never settled, sends you back to that block's skill. A topic that belongs to an inner block is deferred: record it, don't decide it.
@@ -66,7 +66,7 @@ This block later links tasks → data → design, so the result is useful, trust
 - **Task blocks are identified.** Domain tasks sometimes map directly to abstract visualization tasks (e.g. *compare*, *summarize*).
 - **Data blocks are designed.** Sometimes it must be checked whether an abstract task is suitable for the domain situation.
 
-**Skill:** `viz-data-abstract` for the data ("What?") · Reference: [data-types.md](../../viz-data-abstract/references/data-types.md). `viz-task-abstract` for the task ("Why?"). Data and tasks inform each other: a task can need a derived attribute, and the data limits which tasks are possible.
+**Skill:** `viz-data-abstract` for the data ("What?") · Reference: [data-types.md](../../viz-data-abstract/references/data-types.md). `viz-task-abstract` for the task ("Why?") · Reference: [task-types.md](../../viz-task-abstract/references/task-types.md). Data and tasks inform each other: a task can need a derived attribute, and the data limits which tasks are possible.
 
 **Inside:** [Domain situation](#1-domain-situation) · **Feeds into:** [Visual encoding/interaction idiom](#3-visual-encodinginteraction-idiom)
 
