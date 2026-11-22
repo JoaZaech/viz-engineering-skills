@@ -2,3 +2,4 @@
 name: viz-task-abstract
 description: Task abstraction (Munzner's "Why?"), the task half of the data/task abstraction block, paired with viz-data-abstract: rewrite each stakeholder's domain question as an abstract {action, target} task (actions such as discover, present, lookup, browse, locate, explore, identify, compare, summarize; targets such as trends, outliers, distributions, correlations, dependencies, paths, topology) and name the attributes, including derived ones, that each task needs. Use after the data abstraction, before choosing a visualization, or when the user asks what users need to do with the data or why they need a visualization.
 ---
+not yet implemented
